@@ -22,11 +22,21 @@ function* fetchAllMovies() {
         const movies = yield axios.get('/api/movie');
         console.log('get all:', movies.data);
         yield put({ type: 'SET_MOVIES', payload: movies.data });
-
+        
     } catch {
         console.log('get all error');
     }
+    
+}
+function* fetchMovieDetails (){
+    try{
+        const details = yield axios.get(`api/movie/${action.payload}`)
+        console.log('get all:', details.data)
+    }
+    catch {
+        console.log('error in retrieving get:action.payload');
         
+    }
 }
 
 // Create sagaMiddleware
@@ -36,9 +46,18 @@ const sagaMiddleware = createSagaMiddleware();
 const movies = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
-            return action.payload;
+        return action.payload;
         default:
-            return state;
+        return state;
+    }
+}
+
+const details = (state = [], action)=>{
+    switch(action.type){
+        case 'SET_DETAILS':
+        return action.payload;
+        default: 
+        return state;
     }
 }
 
@@ -46,9 +65,9 @@ const movies = (state = [], action) => {
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
-            return action.payload;
+        return action.payload;
         default:
-            return state;
+        return state;
     }
 }
 
@@ -57,19 +76,21 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        details
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
-);
-
-// Pass rootSaga into our sagaMiddleware
-sagaMiddleware.run(rootSaga);
-
-ReactDOM.render(
-    <React.StrictMode>
+    );
+    
+    // Pass rootSaga into our sagaMiddleware
+    sagaMiddleware.run(rootSaga);
+    
+    ReactDOM.render(
+        <React.StrictMode>
         <Provider store={storeInstance}>
         <App />
         </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+        </React.StrictMode>,
+        document.getElementById('root')
+        );
+        
