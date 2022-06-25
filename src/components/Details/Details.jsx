@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
 function Details(){
-    const genresList = useSelector(store=>store.genres);
+    const movieDetails = useSelector(store=>store.Details);
     const homePage = ()=>{
         history.push('/');
         console.log('returning back to home');
@@ -14,10 +14,10 @@ function Details(){
         <>
         <div>
         <h2>Movie Details</h2>
-        <h3>{genresList.title}</h3>
-        <img src={genresList.poster} alt={genresList.title}/>
-            <h4>{genresList.genres}</h4>
-            <h3>{genresList.description}</h3>
+        <h3>{movieDetails.title}</h3>
+        <img src={movieDetails.poster} alt={movieDetails.title}/>
+            <h4>{movieDetails.genres}</h4>
+            <h3>{movieDetails.description}</h3>
             <button onClick={homePage}>Back </button>
         </div>
         

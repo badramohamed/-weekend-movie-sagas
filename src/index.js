@@ -16,8 +16,8 @@ import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-    yield takeEvery('CREATE_MOVIE', MovieDetails);
-    yield takeEvery('POST_MOVIES', fetchGenres);
+    yield takeEvery('CREATE_MOVIE', PostMovies);
+    yield takeEvery('POST_MOVIES', fetchDetails);
 }
 
 //////////////////////// SAGAS //////////////////////
@@ -35,38 +35,35 @@ function* fetchAllMovies() {
     
 }
 
-function* fetchGenres (action){
+function* fetchDetails (action){
         console.log('made it to fetchResults!', action);
-        let res;
+       
         try {
-            res = yield axios.get(`/api/movie/${action.payload}`);
+            const res = yield axios.get(`/api/movie/${action.payload}`);
             console.log('res.data', res.data[0]);
+            yield put({ type: 'SET_DETAILS', payload: res.data[0]});
         }
         catch (err) {
             console.error('oh no', err);
             return;
         }
-        // put means dispatch();
-        yield put({
-            type: 'SET_DETAILS',
-            payload: res.data[0]
-        });
-}
+    }
 
-function* MovieDetails (){
+
+function* PostMovies (){
     try{
- 
+        const movies = action.payload
         console.log(action.payload);
         yield axios.post({
             method:'POST',
-            url: '/api/movie',
-            data: action.payload
+            url: '/',
+            data: movies
         })
        yield put({
             type: 'FETCH_MOVIES',     
         })
     } catch {
-    console.log('errog posting')}
+    console.log('error posting')}
 }
 
 // Create sagaMiddleware
