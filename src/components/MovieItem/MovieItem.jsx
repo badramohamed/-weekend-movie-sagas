@@ -45,6 +45,7 @@ function MovieItem(){
             onChange={(evt) => setMovieItem({...movieItem,description:evt.target.value})}/>
             </form>
             <button>add</button>
+            
         </div>
         </>
         )

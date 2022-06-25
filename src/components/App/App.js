@@ -2,6 +2,7 @@ import {HashRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 import MovieList from '../MovieList/MovieList';
 import MovieItem from '../MovieItem/MovieItem';
+import Details from '../Details/Details';
 
 function App() {
   return (
