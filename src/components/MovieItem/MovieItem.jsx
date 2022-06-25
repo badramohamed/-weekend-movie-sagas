@@ -23,7 +23,7 @@ function MovieItem(){
                 description: description
             }
         })
-        history.push('/Details');
+        history.push('/');
      
     }
     

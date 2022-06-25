@@ -22,7 +22,7 @@ function MovieList() {
             payload: details,
 
         })
-        history.push('/MovieItem');
+        history.push('/Details');
 
     }
 

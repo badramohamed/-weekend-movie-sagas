@@ -17,10 +17,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-e
 
   console.log('get all details', req.params.id);
-  const sqlText = `SELECT "movies".title, "movies".poster, "movies".description, STRING_AGG("genres".name, ', ') AS "genres" FROM "movies"
+  const sqlText = 
+  `SELECT "movies".title, "movies".poster, "movies".description, STRING_AGG("genres".name, ', ') AS "genres" FROM "movies"
   JOIN "movies_genres" ON "movies".id = "movies_genres".id
   JOIN "genres" ON "movies_genres".genre_id = "genres".id
   WHERE "movies".id = $1
