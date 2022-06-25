@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useState} from 'react'; 
 import { useHistory } from 'react-router-dom';
 
+
 function MovieItem(){
     const history = useHistory();
     const dispatch= useDispatch();
@@ -17,7 +18,7 @@ function MovieItem(){
     const handleSubmit = (evt)=>{
         evt.preventDefault();
         dispatch({
-            type: 'CREATE_DETAILS',
+            type: 'CREATE_MOVIE',
             payload: movieItem
         })
         history.push('/Details');
@@ -45,8 +46,23 @@ function MovieItem(){
             onChange={(evt) => setMovieItem({...movieItem,description:evt.target.value})}/>
             </form>
             <button>add</button>
-            
-        </div>
+             <select> 
+                <option value = 'Adventure'></option>
+                <option value = 'Animated'></option>
+                <option value = 'Biographical'></option>
+                <option value = 'Comedy'></option>
+                <option value = 'Disaster'></option>
+                <option value = 'Drama'></option>
+                <option value = 'Epic'></option>
+                <option value = 'Fantasy'></option>
+                <option value = 'Musical'></option>
+                <option value = 'Romantic'></option>
+                <option value = 'Science Fiction'></option>
+                <option value = 'Space Opera'></option>
+                <option value = 'Superhero'></option>
+            </select> 
+
+         </div> 
         </>
         )
     }
