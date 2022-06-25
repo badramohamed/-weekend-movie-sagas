@@ -22,7 +22,7 @@ function MovieItem(){
             payload: movieItem
         })
         history.push('/Details');
-        // setMovieItem('')
+        // setMovieItem('');
     }
 
     return(
@@ -36,12 +36,12 @@ function MovieItem(){
             onChange={(evt) => setMovieItem({...movieItem,title:evt.target.value})}/>
             <input 
             type= "text"
-            placeholder="description"
+            placeholder="image"
             value= {movieItem}
             onChange={(evt) => setMovieItem({...movieItem,poster:evt.target.value})}/>
             <input 
             type= "text"
-            placeholder="Title"
+            placeholder="Description"
             value= {movieItem}
             onChange={(evt) => setMovieItem({...movieItem,description:evt.target.value})}/>
             </form>

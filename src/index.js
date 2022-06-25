@@ -11,14 +11,16 @@ import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
 
+///////////////// ROOTS ///////////////////////
+
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-    yield takeEvery('CREATE_MOVIE', fetchMovieDetails);
-    // yield takeEvery('MOVIE_DETAILS');
+    yield takeEvery('CREATE_MOVIE', MovieDetails);
+    yield takeEvery('POST_MOVIES', fetchGenres);
 }
 
-
+//////////////////////// SAGAS //////////////////////
 
 function* fetchAllMovies() {
   //  get all movies from the DB
@@ -33,24 +35,35 @@ function* fetchAllMovies() {
     
 }
 
-// function* fetchDetails (action){
-//     const movies = yield axios.get(`/api/movie/${action.payload}`);
-//     console.log(response.data[0]);
-//     yield put({type: 'FETCH_MOVIE', payload: response.data[0]});
-//  } 
-//     catch {
-//         console.log('get all error');
-//     }
-
-
-
-function* fetchMovieDetails (){
-    try{
-        const movie=action.payload
-        console.log(action.payload);
-        yield axios.post('/', movie)
+function* fetchGenres (action){
+        console.log('made it to fetchResults!', action);
+        let res;
+        try {
+            res = yield axios.get(`/api/movie/${action.payload}`);
+            console.log('res.data', res.data[0]);
+        }
+        catch (err) {
+            console.error('oh no', err);
+            return;
+        }
+        // put means dispatch();
         yield put({
-            type: 'POST_MOVIES',     
+            type: 'SET_DETAILS',
+            payload: res.data[0]
+        });
+}
+
+function* MovieDetails (){
+    try{
+ 
+        console.log(action.payload);
+        yield axios.post({
+            method:'POST',
+            url: '/api/movie',
+            data: action.payload
+        })
+       yield put({
+            type: 'FETCH_MOVIES',     
         })
     } catch {
     console.log('errog posting')}
@@ -58,6 +71,9 @@ function* fetchMovieDetails (){
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
+
+
+//////////////// REDUCER LIST: ///////////////////////
 
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
@@ -69,7 +85,7 @@ const movies = (state = [], action) => {
     }
 }
 
-const details = (state = [], action)=>{
+const details = (state = {}, action)=>{
     switch(action.type){
         case 'SET_DETAILS':
         return action.payload;
@@ -88,6 +104,7 @@ const genres = (state = [], action) => {
     }
 }
 
+///////////////////// STORE ///////////////////////////
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
