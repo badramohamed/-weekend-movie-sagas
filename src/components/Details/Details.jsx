@@ -19,16 +19,16 @@ function Details(){
     return(
         <>
         <div>
-        <h2>Movie Details</h2>
+            <h2>Movie Details</h2>
             <h3>{details.title}</h3>
             <img src={details.poster} alt={details.title}/>
-            <h4>{details.genres}</h4>
+             <h4>{details.genres}</h4>
             <h3>{details.description}</h3>
-        <Button onClick={homePage} variant="contained">back</Button>
+            <Button onClick={homePage} variant="contained">back</Button>
         </div>
         
         </>
         )
     }
     
-    export default Details;
+ export default Details;

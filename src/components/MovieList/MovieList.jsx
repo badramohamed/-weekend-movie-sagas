@@ -4,8 +4,9 @@ import { useHistory } from 'react-router-dom';
 import './MovieList.css';
 
 function MovieList() {
-    //  consts that will be used to dispatch,
+    // consts that will be used to dispatch,
     // save history and push as well as my selector that calls my moviestore
+
     const dispatch = useDispatch();
     const history = useHistory();
     const movies = useSelector(store => store.movies);
@@ -49,4 +50,4 @@ function MovieList() {
             );
         }
         
-        export default MovieList;
+export default MovieList;

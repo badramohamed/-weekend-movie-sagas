@@ -33,7 +33,7 @@ img {
   border-radius: 4px;
   padding: 50px;
   width: 160px;
- object-fit: contain;
+  object-fit: contain;
   height: 100px;
   
 }
