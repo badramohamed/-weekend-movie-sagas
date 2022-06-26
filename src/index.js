@@ -22,7 +22,7 @@ function* rootSaga() {
 //////////////////////// SAGAS //////////////////////
 
 function* fetchAllMovies() {
-  //  get all movies from the DB
+    //  get all movies from the DB
     try {
         const movies = yield axios.get('/api/movie');
         console.log('get all:', movies.data);
@@ -32,24 +32,22 @@ function* fetchAllMovies() {
         console.log('get all error');
     }
     
-}
+};
+
 function* fetchDetails (action){
-        // console.log('made it to fetchDetails!', action);
-        try {
-            const res = yield axios.get(`/api/movie/${action.payload}`);
-            console.log(res.data[0]);
-            yield put({ type: 'SET_DETAILS', payload: res.data[0]});
-        }
-        catch (err) {
-            console.error('oh no', err);
-            return;
-        }
+    // console.log('made it to fetchDetails!', action);
+    try {
+        const res = yield axios.get(`/api/movie/${action.payload}`);
+        console.log(res.data[0]);
+        yield put({ type: 'SET_DETAILS', payload: res.data[0]});
     }
+    catch (err) {
+        console.error('oh no', err);
+        return;
+    }
+}
 
-
-
-
-// Create sagaMiddleware
+////////////// Create sagaMiddleware /////////////////////
 const sagaMiddleware = createSagaMiddleware();
 
 
@@ -63,7 +61,7 @@ const movies = (state = [], action) => {
         default:
         return state;
     }
-}
+};
 
 const details = (state = {}, action)=>{
     switch(action.type){
@@ -72,7 +70,7 @@ const details = (state = {}, action)=>{
         default: 
         return state;
     }
-}
+};
 
 // Used to store the movie genres
 const genres = (state = [], action) => {
@@ -82,7 +80,8 @@ const genres = (state = [], action) => {
         default:
         return state;
     }
-}
+};
+
 
 ///////////////////// STORE ///////////////////////////
 // Create one store that all components can use
