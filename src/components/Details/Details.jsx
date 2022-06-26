@@ -1,6 +1,9 @@
 import React, {useEffect}from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import Button from '@mui/material/Button';
+
+
 
 function Details(){
     // using history to push users back to main page as well as calling my details reducer
@@ -21,7 +24,7 @@ function Details(){
             <img src={details.poster} alt={details.title}/>
             <h4>{details.genres}</h4>
             <h3>{details.description}</h3>
-        <button onClick={homePage}>Back </button>
+        <Button onClick={homePage} variant="contained">back</Button>
         </div>
         
         </>
