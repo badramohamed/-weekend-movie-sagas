@@ -19,12 +19,18 @@ function Details(){
     return(
         <>
         <div>
+        <h4>Genres</h4>
+            <ul>
+                {details.genres && details.genres.map(genre => (
+                <li key={genre.id}>{genre.name}</li>
+                ))}
+            </ul>
             <h2>Movie Details</h2>
             <h3>{details.title}</h3>
             <img src={details.poster} alt={details.title}/>
-             <h4>{details.genres}</h4>
             <h3>{details.description}</h3>
             <Button onClick={homePage} variant="contained">back</Button>
+           
         </div>
         
         </>

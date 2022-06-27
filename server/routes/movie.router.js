@@ -20,18 +20,35 @@ router.get('/:id', (req, res) => {
 
   console.log('get all details', req.params.id);
   const sqlText = 
-  `SELECT "movies".title, "movies".poster, "movies".description, STRING_AGG("genres".name, ', ') AS "genres" FROM "movies"
-  JOIN "movies_genres" ON "movies".id = "movies_genres".id
-  JOIN "genres" ON "movies_genres".genre_id = "genres".id
-  WHERE "movies".id = $1
-  GROUP BY "movies".title, "movies".poster, "movies".description;`;
-  pool.query(sqlText, [req.params.id])
-  .then((result) =>{
-    res.send(result.rows);
-  }).catch((error)=>{
-    console.log(`error making database details`, error);
-         res.sendStatus(500);
+  `SELECT 
+  movies.*,
+  array_agg(to_json(genres)) AS genres
+FROM movies
+JOIN movies_genres
+  ON movies_genres.movie_id = movies.id
+JOIN genres
+  ON movies_genres.genre_id = genres.id
+WHERE movies.id = $1
+GROUP BY movies.id;
+`;
+  const sqlParms= [req.params.id]
+  pool.query(sqlText, sqlParms)
+  .then((dbRes) => {
+    console.log('dbRes.rows[0]', dbRes.rows[0]);
+
+    if (dbRes.rows.length === 0) {
+      console.log(`No movies matching id ${req.params.id}`);
+      res.sendStatus(404);
+      return;
+    }
+
+    res.send(dbRes.rows[0]);
+  })
+  .catch(err => {
+    console.error(`GET /movie/:id failed ${err}`, );
+    res.sendStatus(500);
   });
+
 });
 
 router.post('/', (req, res) => {

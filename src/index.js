@@ -37,13 +37,15 @@ function* fetchAllMovies() {
 function* fetchDetails (action){
     // console.log('made it to fetchDetails!', action);
     try {
-        const res = yield axios.get(`/api/movie/${action.payload}`);
-        console.log(res.data[0]);
-        yield put({ type: 'SET_DETAILS', payload: res.data[0]});
+        let res = yield axios.get(`/api/movie/${action.payload}`);
+        
+        yield put({
+            type: 'SET_DETAILS',
+            payload: res.data
+        });
     }
     catch (err) {
-        console.error('oh no', err);
-        return;
+        console.error(' failed', err);
     }
 }
 
